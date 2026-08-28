@@ -1,17 +1,41 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ko" data-runtime-ready="pending">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="deployment-version" content="Updated 2026.08.28 · Build 29">
+<meta name="deployment-version" content="Updated 2026.08.28 · Build 30">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>KCMS 금융시장 인프라 서비스</title>
 <style>
-html,body{width:100%;height:100%;margin:0;padding:0;overflow:hidden;background:#fff}
-#kcms-websquare-app{display:block;width:100%;height:100%;border:0;background:#fff}
+html,body{width:100%;height:100%;margin:0;padding:0;overflow:hidden;background:#fff;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+#kcms-websquare-app{position:absolute;inset:0;display:block;width:100%;height:100%;border:0;background:#fff}
+#kcms-runtime-status{position:fixed;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;background:#f4f5f6;color:#1e2124;text-align:center;padding:24px;box-sizing:border-box}
+#kcms-runtime-status[hidden]{display:none}
+.kcms-status-card{max-width:520px}.kcms-status-title{font-size:20px;font-weight:700;margin:0 0 8px}.kcms-status-copy{font-size:14px;line-height:1.6;margin:0;color:#464c53}.kcms-status-spinner{width:34px;height:34px;margin:0 auto 18px;border:4px solid #d8e5fd;border-top-color:#256ef4;border-radius:999px;animation:spin .9s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.kcms-status-spinner{animation:none}}
 </style>
 </head>
 <body>
 <iframe id="kcms-websquare-app" title="KCMS 금융시장 인프라 서비스" src="https://websquare-runtime.suaveforge.com:18455/websquare/websquare.html?w2xPath=/ui/main/main.xml" allow="clipboard-read; clipboard-write" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+<div id="kcms-runtime-status" role="status" aria-live="polite"><div class="kcms-status-card"><div class="kcms-status-spinner" aria-hidden="true"></div><p class="kcms-status-title">서비스 화면을 불러오는 중입니다</p><p class="kcms-status-copy">잠시만 기다려 주세요.</p></div></div>
+<script>
+(function(){
+  var expectedOrigin="https://websquare-runtime.suaveforge.com:18455";
+  var status=document.getElementById('kcms-runtime-status');
+  var timer=setTimeout(function(){
+    document.documentElement.setAttribute('data-runtime-ready','timeout');
+    status.querySelector('.kcms-status-title').textContent='서비스 화면 연결을 확인해 주세요';
+    status.querySelector('.kcms-status-copy').textContent='브라우저 새로고침 후에도 계속되면 배포 상태를 점검해 주세요.';
+    var spinner=status.querySelector('.kcms-status-spinner'); if(spinner){spinner.style.display='none';}
+  },15000);
+  window.addEventListener('message',function(ev){
+    if(ev.origin!==expectedOrigin||!ev.data||ev.data.type!=='KCMS_WEBSQUARE_READY'){return;}
+    clearTimeout(timer);
+    document.documentElement.setAttribute('data-runtime-ready','yes');
+    document.documentElement.setAttribute('data-runtime-build',String(ev.data.build||''));
+    status.hidden=true;
+  });
+})();
+</script>
 </body>
 </html>
