@@ -1,5 +1,8 @@
 {
   "updated": "2026-08-28",
-  "build": "28",
-  "target": "https://api-websquare.suaveforge.com:18455/websquare/websquare.html?w2xPath=/ui/main/main.xml"
+  "build": "29",
+  "front": "https://websquare.suaveforge.com",
+  "runtimeHost": "websquare-runtime.suaveforge.com",
+  "runtimeUrl": "https://websquare-runtime.suaveforge.com:18455/websquare/websquare.html?w2xPath=/ui/main/main.xml",
+  "architecture": "front-shell+separate-websquare-runtime+api"
 }
