@@ -8,18 +8,37 @@
 <title>KCMS 금융시장 인프라 서비스</title>
 <style>
 html,body{width:100%;height:100%;margin:0;padding:0;overflow:hidden;background:#fff;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
-#kcms-websquare-app{position:absolute;inset:0;display:block;width:100%;height:100%;border:0;background:#fff}
+#kcms-websquare-app{position:absolute;inset:0;display:block;width:100%;height:100%;border:0;background:#fff;transition:top .15s ease,height .15s ease}
 #kcms-runtime-status{position:fixed;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;background:#f4f5f6;color:#1e2124;text-align:center;padding:24px;box-sizing:border-box}
 #kcms-runtime-status[hidden]{display:none}
 .kcms-status-card{max-width:520px}.kcms-status-title{font-size:20px;font-weight:700;margin:0 0 8px}.kcms-status-copy{font-size:14px;line-height:1.6;margin:0;color:#464c53}.kcms-status-spinner{width:34px;height:34px;margin:0 auto 18px;border:4px solid #d8e5fd;border-top-color:#256ef4;border-radius:999px;animation:spin .9s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+html[data-presentation="standard"] #kcms-websquare-app{top:38px;height:calc(100% - 38px)}
+html[data-presentation="standard"] #kcms-runtime-status{top:38px}
+.sf-shell{position:absolute;left:0;right:0;top:0;height:38px;z-index:12;display:flex;align-items:center;justify-content:space-between;box-sizing:border-box;padding:0 14px;background:#fff;border-bottom:1px solid #e5e7eb;color:#111827}
+.sf-project{font-size:12px;font-weight:700;color:#6b7280;letter-spacing:-.02em}.sf-brand{display:inline-flex;align-items:center;gap:7px;color:#111827;text-decoration:none;opacity:.82}.sf-logo{display:inline-flex;width:25px;height:25px;align-items:center;justify-content:center;border-radius:7px;background:#0b0c0f;overflow:hidden}.sf-logo img{display:block;width:21px;height:21px}.sf-brand strong{font-size:13px;font-weight:850;letter-spacing:-.035em}
 @media (prefers-reduced-motion:reduce){.kcms-status-spinner{animation:none}}
 </style>
+<script>
+(function(){
+  var mode=new URLSearchParams(location.search).get('potpolio')==='1';
+  function meta(name,content){var e=document.head.querySelector('meta[name="'+name+'"]');if(!e){e=document.createElement('meta');e.name=name;document.head.appendChild(e)}e.content=content}
+  if(mode){meta('robots','noindex,nofollow,noarchive,nosnippet');document.documentElement.setAttribute('data-presentation','portfolio');return}
+  document.documentElement.setAttribute('data-presentation','standard');meta('robots','index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1');meta('author','SuaveForge');document.title+=' | SuaveForge 프로젝트';
+  var canonical=document.createElement('link');canonical.rel='canonical';canonical.href=location.origin+location.pathname;document.head.appendChild(canonical);
+  var schema=document.createElement('script');schema.type='application/ld+json';schema.textContent=JSON.stringify({'@context':'https://schema.org','@type':'WebApplication',name:'KCMS WebSquare 금융시장 인프라 서비스',url:canonical.href,creator:{'@type':'Organization',name:'SuaveForge',url:'https://suaveforge.com/'}});document.head.appendChild(schema);
+})();
+</script>
 </head>
 <body>
 <iframe id="kcms-websquare-app" title="KCMS 금융시장 인프라 서비스" src="https://websquare-runtime.suaveforge.com:18455/websquare/websquare.html?w2xPath=/ui/main/main.xml" allow="clipboard-read; clipboard-write" referrerpolicy="strict-origin-when-cross-origin"></iframe>
 <div id="kcms-runtime-status" role="status" aria-live="polite"><div class="kcms-status-card"><div class="kcms-status-spinner" aria-hidden="true"></div><p class="kcms-status-title">서비스 화면을 불러오는 중입니다</p><p class="kcms-status-copy">잠시만 기다려 주세요.</p></div></div>
 <script>
 (function(){
+  var mode=new URLSearchParams(location.search).get('potpolio')==='1';
+  var frame=document.getElementById('kcms-websquare-app');
+  if(mode){var u=new URL(frame.src);u.searchParams.set('potpolio','1');frame.src=u.href;}else{
+    var shell=document.createElement('div');shell.className='sf-shell';shell.innerHTML='<span class="sf-project">KCMS · WebSquare</span><a class="sf-brand" href="https://suaveforge.com/work/" target="_blank" rel="noopener"><span class="sf-logo"><img src="https://suaveforge.com/assets/logo-motion/suaveforge-logo-final.svg?v=20260828-34" alt=""></span><strong>SuaveForge</strong></a>';document.body.appendChild(shell);
+  }
   var expectedOrigin="https://websquare-runtime.suaveforge.com:18455";
   var status=document.getElementById('kcms-runtime-status');
   var timer=setTimeout(function(){
